@@ -13,7 +13,7 @@ Doesn't handle messages from the trigger at this point
 
 class MP3Trigger{
   public:
-  	MP3Trigger();
+  	MP3Trigger(HardwareSerial* serial);
   	void play();
 	void trigger(byte track);	//1–255
 	void play(byte track);		//0—255
@@ -21,6 +21,10 @@ class MP3Trigger{
 	void reverse();
 	void setVolume(byte level);	//0-255
 	void statusRequest();
+	
+private:
+	bool doLoop;
+	HardwareSerial* s;
 };
 
 #endif

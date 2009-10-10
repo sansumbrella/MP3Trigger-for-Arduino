@@ -5,45 +5,47 @@ MP3Trigger.cpp
 */
 
 #include "MP3Trigger.h"
-MP3Trigger::MP3Trigger()
+MP3Trigger::MP3Trigger(HardwareSerial* serial)
 {
-	Serial.begin(38400);
+	s = serial;
+	s->begin(38400);
+	doLoop = false;
 }
 
 void MP3Trigger::play()
 {
-	Serial.write('O');
+	s->write('O');
 }
 
 void MP3Trigger::forward()
 {
-	Serial.write('F');
+	s->write('F');
 }
 
 void MP3Trigger::reverse()
 {
-	Serial.write('R');
+	s->write('R');
 }
 
 void MP3Trigger::trigger(byte track)
 {
-	Serial.write('t'+track);
+	s->write('t'+track);
 }
 
 void MP3Trigger::play(byte track)
 {
-	Serial.write('p'+track);
+	s->write('p'+track);
 }
 
 void MP3Trigger::setVolume(byte level)
 {
 	level = level ^ B11111111;	//flip it around, so the higher number > higher volume
-	Serial.write('v'+level);
+	s->write('v'+level);
 }
 
 void MP3Trigger::statusRequest()
 {
-	Serial.println("MP3 yet implemented");
+	s->println("MP3 yet implemented");
 	//will need to work on this one to make it useful
 	// if (Serial.available() > 0)
 	// {
