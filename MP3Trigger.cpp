@@ -5,11 +5,25 @@ MP3Trigger.cpp
 */
 
 #include "MP3Trigger.h"
+
+MP3Trigger::MP3Trigger()
+{
+	s = &Serial;
+	s->begin(38400);
+	doLoop = false;
+}
+
 MP3Trigger::MP3Trigger(HardwareSerial* serial)
 {
 	s = serial;
 	s->begin(38400);
 	doLoop = false;
+}
+
+MP3Trigger::~MP3Trigger()
+{
+	s->flush();
+	s = NULL;
 }
 
 void MP3Trigger::play()

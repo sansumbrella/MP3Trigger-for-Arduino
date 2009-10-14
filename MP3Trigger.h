@@ -13,7 +13,9 @@ Doesn't handle messages from the trigger at this point
 
 class MP3Trigger{
   public:
+	MP3Trigger();
   	MP3Trigger(HardwareSerial* serial);
+	~MP3Trigger();
   	void play();
 	void trigger(byte track);	//1–255
 	void play(byte track);		//0—255
