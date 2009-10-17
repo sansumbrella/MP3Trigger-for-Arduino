@@ -8,16 +8,14 @@ MP3Trigger.cpp
 
 MP3Trigger::MP3Trigger()
 {
-	s = &Serial;
-	s->begin(38400);
 	doLoop = false;
 }
 
-MP3Trigger::MP3Trigger(HardwareSerial* serial)
-{
+void MP3Trigger::setup(HardwareSerial* serial)
+{	//since Serial.begin demands to be called in the setup() function
+	//make sure to call this before trying to use the trigger
 	s = serial;
 	s->begin(38400);
-	doLoop = false;
 }
 
 MP3Trigger::~MP3Trigger()
