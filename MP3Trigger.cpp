@@ -41,23 +41,31 @@ void MP3Trigger::reverse()
 
 void MP3Trigger::trigger(byte track)
 {
-	s->write('t'+track);
+	s->write('t');
+	s->write(track);
 }
 
 void MP3Trigger::play(byte track)
 {
-	s->write('p'+track);
+	s->write('p');
+	s->write(track);
 }
 
 void MP3Trigger::setVolume(byte level)
 {
 	level = level ^ B11111111;	//flip it around, so the higher number > higher volume
-	s->write('v'+level);
+	s->write('v');
+	s->write(level);
 }
 
 void MP3Trigger::statusRequest()
 {
-	s->println("MP3 yet implemented");
+	s->println("MP3Trigger::statusRequest is not yet implemented");
+	s->flush();
+	s->write('S');
+	s->write('1');
+	delay(5);
+	s->read();
 	//will need to work on this one to make it useful
 	// if (Serial.available() > 0)
 	// {
