@@ -45,10 +45,6 @@ void MP3Trigger::update()
 		int data = s->read();
 		if(char(data) == 'X' && mDoLoop)
 		{
-			Serial.print('Looping track');
-			Serial.print('\t');
-			Serial.print(mLoopTrack);
-			Serial.println();
 			loop();
 		}
 	}
@@ -56,10 +52,6 @@ void MP3Trigger::update()
 
 void MP3Trigger::loop()
 {
-	Serial.print("Looping track");
-	Serial.print('\t');
-	Serial.print(mLoopTrack);
-	Serial.println();
 	play(mLoopTrack);
 }
 
