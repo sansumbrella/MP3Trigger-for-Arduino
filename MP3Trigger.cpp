@@ -8,14 +8,7 @@ MP3Trigger.cpp
 
 MP3Trigger::MP3Trigger()
 {
-	doLoop = false;
-}
-
-void MP3Trigger::setup(HardwareSerial* serial)
-{	//since Serial.begin demands to be called in the setup() function
-	//make sure to call this before trying to use the trigger
-	s = serial;
-	s->begin(38400);
+	mDoLoop = false;
 }
 
 MP3Trigger::~MP3Trigger()
@@ -23,6 +16,56 @@ MP3Trigger::~MP3Trigger()
 	s->flush();
 	s = NULL;
 }
+
+void MP3Trigger::setup(HardwareSerial* serial)
+{
+	s = serial;
+	s->begin(38400);
+}
+
+// 
+// Looping functions
+// 
+void MP3Trigger::setLooping(bool doLoop, byte track)
+{
+	mDoLoop = doLoop;
+	mLoopTrack = track;
+	loop();
+}
+
+void MP3Trigger::setLoopingTrack(byte track)
+{
+	mLoopTrack = track;
+}
+
+void MP3Trigger::update()
+{
+	if( s->available() )
+	{
+		int data = s->read();
+		if(char(data) == 'X' && mDoLoop)
+		{
+			Serial.print('Looping track');
+			Serial.print('\t');
+			Serial.print(mLoopTrack);
+			Serial.println();
+			loop();
+		}
+	}
+}
+
+void MP3Trigger::loop()
+{
+	Serial.print("Looping track");
+	Serial.print('\t');
+	Serial.print(mLoopTrack);
+	Serial.println();
+	play(mLoopTrack);
+}
+
+// 
+// Single-byte built-in functions
+// 
 
 void MP3Trigger::play()
 {
@@ -38,6 +81,10 @@ void MP3Trigger::reverse()
 {
 	s->write('R');
 }
+
+//
+// Built-in two-byte functions
+// 
 
 void MP3Trigger::trigger(byte track)
 {
@@ -57,6 +104,10 @@ void MP3Trigger::setVolume(byte level)
 	s->write('v');
 	s->write(level);
 }
+
+// 
+// Response functions
+// 
 
 void MP3Trigger::statusRequest()
 {

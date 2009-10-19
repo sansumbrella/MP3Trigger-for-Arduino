@@ -14,7 +14,6 @@ Doesn't handle messages from the trigger at this point
 class MP3Trigger{
   public:
 	MP3Trigger();
-  	MP3Trigger(HardwareSerial* serial);
 	~MP3Trigger();
 	void setup(HardwareSerial* serial);
   	void play();
@@ -25,8 +24,14 @@ class MP3Trigger{
 	void setVolume(byte level);	//0-255
 	void statusRequest();
 	
+	void setLooping(bool doLoop, byte track);		//turn looping on/off
+	void setLoopingTrack(byte track);	//select the track to loop
+	void update();						//make sure to call this during your loop()
+	
 private:
-	bool doLoop;
+	bool mDoLoop;
+	byte mLoopTrack;
+	void loop();
 	HardwareSerial* s;
 };
 
