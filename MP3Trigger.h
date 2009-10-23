@@ -17,10 +17,11 @@ class MP3Trigger{
 	~MP3Trigger();
 	void setup(HardwareSerial* serial);
   	void play();
+	void stop();
 	void trigger(byte track);	//1–255
 	void play(byte track);		//0—255
-	void forward();
-	void reverse();
+	void forward();				//move ahead one track
+	void reverse();				//move back one track
 	void setVolume(byte level);	//0-255
 	void statusRequest();
 	
@@ -31,6 +32,7 @@ class MP3Trigger{
 private:
 	bool mDoLoop;
 	byte mLoopTrack;
+	bool mPlaying;
 	void loop();
 	HardwareSerial* s;
 };

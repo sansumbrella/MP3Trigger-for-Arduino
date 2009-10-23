@@ -9,6 +9,7 @@ MP3Trigger.cpp
 MP3Trigger::MP3Trigger()
 {
 	mDoLoop = false;
+	mPlaying = false;
 }
 
 MP3Trigger::~MP3Trigger()
@@ -30,7 +31,7 @@ void MP3Trigger::setLooping(bool doLoop, byte track)
 {
 	mDoLoop = doLoop;
 	mLoopTrack = track;
-	loop();
+	if(!mPlaying)loop();
 }
 
 void MP3Trigger::setLoopingTrack(byte track)
@@ -43,9 +44,15 @@ void MP3Trigger::update()
 	if( s->available() )
 	{
 		int data = s->read();
-		if(char(data) == 'X' && mDoLoop)
+		if(char(data) == 'X' || char(data) == 'x')
 		{
-			loop();
+			if(mDoLoop)
+			{	
+				loop();
+			} else
+			{
+				mPlaying = false;
+			}
 		}
 	}
 }
@@ -53,6 +60,15 @@ void MP3Trigger::update()
 void MP3Trigger::loop()
 {
 	play(mLoopTrack);
+}
+
+void MP3Trigger::stop()
+{
+	if(mPlaying)
+	{
+		play();
+	}
+	mPlaying = false;
 }
 
 // 
@@ -82,12 +98,14 @@ void MP3Trigger::trigger(byte track)
 {
 	s->write('t');
 	s->write(track);
+	mPlaying = true;
 }
 
 void MP3Trigger::play(byte track)
 {
 	s->write('p');
 	s->write(track);
+	mPlaying = true;
 }
 
 void MP3Trigger::setVolume(byte level)
