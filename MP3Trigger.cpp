@@ -59,7 +59,7 @@ void MP3Trigger::update()
 
 void MP3Trigger::loop()
 {
-	play(mLoopTrack);
+	trigger(mLoopTrack);
 }
 
 void MP3Trigger::stop()
@@ -110,9 +110,11 @@ void MP3Trigger::play(byte track)
 
 void MP3Trigger::setVolume(byte level)
 {
-	level = level ^ B11111111;	//flip it around, so the higher number > higher volume
+	// level = level ^ B11111111;	//flip it around, so the higher number > higher volume
 	s->write('v');
 	s->write(level);
+	Serial.print("Set volume to");
+	Serial.println(level);
 }
 
 // 
