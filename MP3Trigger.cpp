@@ -93,6 +93,7 @@ void MP3Trigger::stop()
 void MP3Trigger::play()
 {
 	s->write('O');
+	mPlaying = !mPlaying;
 }
 
 void MP3Trigger::forward()
