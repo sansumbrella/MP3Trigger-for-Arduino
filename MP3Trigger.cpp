@@ -62,6 +62,9 @@ void MP3Trigger::update()
 			{
 				mPlaying = false;
 			}
+		} else if(char(data) == 'E')
+		{
+			mPlaying = false;
 		}
 	}
 }
