@@ -16,6 +16,7 @@ class MP3Trigger{
 	MP3Trigger();
 	~MP3Trigger();
 	void setup(HardwareSerial* serial);
+	void setup();
   	void play();
 	void stop();
 	void trigger(byte track);	//1–255

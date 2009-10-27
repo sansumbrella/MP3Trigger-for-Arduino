@@ -18,6 +18,11 @@ MP3Trigger::~MP3Trigger()
 	s = NULL;
 }
 
+void MP3Trigger::setup()
+{
+	setup(&Serial);
+}
+
 void MP3Trigger::setup(HardwareSerial* serial)
 {
 	s = serial;
@@ -31,7 +36,11 @@ void MP3Trigger::setLooping(bool doLoop, byte track)
 {
 	mDoLoop = doLoop;
 	mLoopTrack = track;
-	if(!mPlaying)loop();
+	
+	if(!mPlaying && mDoLoop)
+	{
+		loop();
+	}
 }
 
 void MP3Trigger::setLoopingTrack(byte track)
@@ -64,11 +73,14 @@ void MP3Trigger::loop()
 
 void MP3Trigger::stop()
 {
-	if(mPlaying)
+	bool wasPlaying = mPlaying;
+	mDoLoop = false;
+	mPlaying = false;
+	
+	if(wasPlaying)
 	{
 		play();
 	}
-	mPlaying = false;
 }
 
 // 
@@ -113,8 +125,6 @@ void MP3Trigger::setVolume(byte level)
 	// level = level ^ B11111111;	//flip it around, so the higher number > higher volume
 	s->write('v');
 	s->write(level);
-	Serial.print("Set volume to");
-	Serial.println(level);
 }
 
 // 
