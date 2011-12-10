@@ -4,7 +4,12 @@ http://sansumbrella.com/
 Simple wrapper for MP3Trigger serial communication from Arduino.
 Also allows you to loop tracks
 
-Quick example:
+You need to place MP3Trigger in the right place on your machine
+for Arduino libraries. On a Mac, that means MP3Trigger.h and
+MP3Trigger.cpp are inside:
+~/Documents/Arduino/libraries/MP3Trigger
+
+Basic usage will look like the following:
 
 #include <MP3Trigger.h>
 MP3Trigger trigger;
