@@ -26,3 +26,12 @@ void loop()
 //necessary to receive signals from trigger
 trigger.update();
 }
+
+If you aren't able to compile because Arduino can't file WProgram.h, try changing the include statement in MP3Trigger.h to:
+#include "WProgram.h"
+
+I don't know why, but it seems like recent versions of Arduino moved the location of WProgram.h.
+Used to be in the system header search paths <>, now seems to have moved to the user search path "".
+
+Have a look at the Arduino docs on writing a library:
+http://arduino.cc/en/Hacking/LibraryTutorial
