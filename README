@@ -1,6 +1,9 @@
 MP3Trigger by David Wicks
 http://sansumbrella.com/
 
+Additions and MP3TriggerSoftwareSerial variant by Carl Jensen
+http://dimsos.fridata.dk 
+
 Simple wrapper for MP3Trigger serial communication from Arduino.
 Also allows you to loop tracks
 
@@ -11,27 +14,34 @@ MP3Trigger.cpp are inside:
 
 Basic usage will look like the following:
 
+
+
 #include <MP3Trigger.h>
 MP3Trigger trigger;
 void setup()
 {
-//start serial communication with the trigger (over Serial)
-trigger.setup();
-//start looping TRACK001.MP3
-trigger.setLooping(true,1);
+  //start serial communication with the trigger (over Serial)
+  trigger.setup();
+  //start looping TRACK001.MP3
+  trigger.setLooping(true,1);
 }
 
 void loop()
 {
-//necessary to receive signals from trigger
-trigger.update();
+  //necessary to receive signals from trigger
+  trigger.update();
 }
 
-If you aren't able to compile because Arduino can't file WProgram.h, try changing the include statement in MP3Trigger.h to:
-#include "WProgram.h"
+This and other examples for using SoftwareSerial and Quiet Mode is included in
+examples.
 
-I don't know why, but it seems like recent versions of Arduino moved the location of WProgram.h.
-Used to be in the system header search paths <>, now seems to have moved to the user search path "".
+Sparkfun product page, link to User Guidewhich they call
+Datasheet for some reason: 
+http://www.sparkfun.com/products/9715
+
+Updates on new firmware for MP3 Trigger V2 at:
+http://makerjam.com/support/
+
 
 Have a look at the Arduino docs on writing a library:
 http://arduino.cc/en/Hacking/LibraryTutorial
