@@ -1,0 +1,46 @@
+MP3Trigger by David Wicks
+http://sansumbrella.com/
+
+Additions and MP3TriggerSoftwareSerial variant by Carl Jensen
+http://dimsos.fridata.dk 
+
+Simple wrapper for MP3Trigger serial communication from Arduino.
+Also allows you to loop tracks
+
+You need to place MP3Trigger in the right place on your machine
+for Arduino libraries. On a Mac, that means MP3Trigger.h and
+MP3Trigger.cpp are inside:
+~/Documents/Arduino/libraries/MP3Trigger
+
+Basic usage will look like the following:
+
+#include <MP3Trigger.h>
+MP3Trigger trigger;
+void setup()
+{
+  //start serial communication with the trigger (over Serial)
+  trigger.setup();
+  //start looping TRACK001.MP3
+  trigger.setLooping(true,1);
+}
+
+void loop()
+{
+  //necessary to receive signals from trigger
+  trigger.update();
+}
+
+
+This example and another for using Quiet Mode is included in
+examples.
+
+Sparkfun product page, link to User Guidewhich they call
+Datasheet for some reason: 
+http://www.sparkfun.com/products/9715
+
+Updates on new firmware for MP3 Trigger V2 at:
+http://makerjam.com/support/
+
+
+Have a look at the Arduino docs on writing a library:
+http://arduino.cc/en/Hacking/LibraryTutorial
