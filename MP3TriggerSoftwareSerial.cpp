@@ -1,8 +1,10 @@
 /*
 MP3Trigger.cpp
-@author David Wicks
+@author David Wicks, additions by Carl Jensen
 @url	sansumbrella.com
 */
+
+#include "MP3TriggerSoftwareSerial.h"
 
 MP3TriggerSS::MP3TriggerSS()
 {
@@ -74,11 +76,13 @@ void MP3TriggerSS::update()
 			while(reads < 3 && retries < 10) {
 				if(s->available()) {
 					data = (byte) s->read();
-  					for(i = 0; i < 8; i++) {
-						if( (data >> i) & B00000001 ) {
-							quickModeCallback(i + 8*(2-reads) + 1);
-						}
-  					}
+					if(data) {
+	  					for(i = 0; i < 8; i++) {
+							if( (data >> i) & B00000001 ) {
+								quickModeCallback(i + 8*(2-reads) + 1);
+							}
+	  					}
+					}
   					reads++;
 				}
 				else {

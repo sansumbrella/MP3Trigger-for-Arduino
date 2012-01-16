@@ -1,6 +1,6 @@
 /*
 MP3Trigger.h
-@author David Wicks
+@author David Wicks, additions by Carl Jensen
 @url	sansumbrella.com
 
 Doesn't handle messages from the trigger at this point
@@ -10,6 +10,7 @@ Doesn't handle messages from the trigger at this point
 #define MP3_TRIGGER_SS_H
 
 #include <Arduino.h>
+#include <SoftwareSerial.h>
 
 class MP3TriggerSS{
 public:
