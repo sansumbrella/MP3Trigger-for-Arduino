@@ -1,6 +1,6 @@
 /*
 MP3Trigger.cpp
-@author David Wicks
+@author David Wicks, additions by Carl Jensen
 @url	sansumbrella.com
 */
 
@@ -16,6 +16,7 @@ MP3Trigger::~MP3Trigger()
 {
 	s->flush();
 	s = NULL;
+	quickModeCallback = NULL;
 }
 
 void MP3Trigger::setup()
@@ -24,6 +25,7 @@ void MP3Trigger::setup()
 }
 
 void MP3Trigger::setup(HardwareSerial* serial)
+//void MP3Trigger::setup(SoftwareSerial* serial)
 {
 	s = serial;
 	s->begin(38400);
@@ -53,7 +55,8 @@ void MP3Trigger::update()
 	if( s->available() )
 	{
 		int data = s->read();
-		if(char(data) == 'X' || char(data) == 'x')
+		
+		if(char(data) == 'X')
 		{
 			if(mDoLoop)
 			{	
@@ -65,6 +68,25 @@ void MP3Trigger::update()
 		} else if(char(data) == 'E')
 		{
 			mPlaying = false;
+		} else if(char(data) == 'M')
+		{
+			byte reads = 0;
+			byte retries = 0;
+			byte i;
+			while(reads < 3 && retries < 10) {
+				if(s->available()) {
+					data = (byte) s->read();
+  					for(i = 0; i < 8; i++) {
+						if( (data >> i) & B00000001 ) {
+							quickModeCallback(i + 8*(2-reads) + 1);
+						}
+  					}
+  					reads++;
+				}
+				else {
+					retries++;
+				}
+			}
 		}
 	}
 }
@@ -76,11 +98,9 @@ void MP3Trigger::loop()
 
 void MP3Trigger::stop()
 {
-	bool wasPlaying = mPlaying;
 	mDoLoop = false;
-	mPlaying = false;
 	
-	if(wasPlaying)
+	if(mPlaying)
 	{
 		play();
 	}
@@ -129,6 +149,14 @@ void MP3Trigger::setVolume(byte level)
 	// level = level ^ B11111111;	//flip it around, so the higher number > higher volume
 	s->write('v');
 	s->write(level);
+}
+
+// 1 for on, 0 for off, callback function
+void MP3Trigger::quietMode(boolean onoff, void (*callback)(int))
+{
+	s->write('Q');
+	s->write( '0' + onoff );
+	quickModeCallback = callback;
 }
 
 // 

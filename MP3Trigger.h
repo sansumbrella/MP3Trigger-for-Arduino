@@ -1,6 +1,6 @@
 /*
 MP3Trigger.h
-@author David Wicks
+@author David Wicks, additions by Carl Jensen
 @url	sansumbrella.com
 
 Doesn't handle messages from the trigger at this point
@@ -9,13 +9,15 @@ Doesn't handle messages from the trigger at this point
 #ifndef MP3_TRIGGER_H
 #define MP3_TRIGGER_H
 
-#include <WProgram.h>
+#include <Arduino.h>
 
 class MP3Trigger{
-  public:
+public:
 	MP3Trigger();
 	~MP3Trigger();
 	void setup(HardwareSerial* serial);
+	//void setup(SoftwareSerial* serial);
+	void setup(boolean soft);
 	void setup();
   	void play();
 	void stop();
@@ -24,6 +26,7 @@ class MP3Trigger{
 	void forward();				//move ahead one track
 	void reverse();				//move back one track
 	void setVolume(byte level);	//0-255
+	void quietMode(boolean onoff, void (*function)(int));	//1 for on, 0 for off, callback function
 	void statusRequest();
 	
 	void setLooping(bool doLoop, byte track);		//turn looping on/off
@@ -36,6 +39,8 @@ private:
 	bool mPlaying;
 	void loop();
 	HardwareSerial* s;
+	//SoftwareSerial* s;
+    void (*quickModeCallback)(int);
 };
 
 #endif
