@@ -17,9 +17,8 @@ public:
 	~MP3Trigger();
 	void setup(HardwareSerial* serial);
 	//void setup(SoftwareSerial* serial);
-	void setup(boolean soft);
 	void setup();
-  	void play();
+	void play();
 	void stop();
 	void trigger(byte track);	//1–255
 	void play(byte track);		//0—255
@@ -40,7 +39,7 @@ private:
 	void loop();
 	HardwareSerial* s;
 	//SoftwareSerial* s;
-    void (*quickModeCallback)(int);
+	void (*quickModeCallback)(int);
 };
 
 #endif

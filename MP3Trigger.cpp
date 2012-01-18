@@ -73,17 +73,17 @@ void MP3Trigger::update()
 			byte reads = 0;
 			byte retries = 0;
 			byte i;
-			while(reads < 3 && retries < 10) {
+			while(reads < 3 && retries < 1000) {
 				if(s->available()) {
 					data = (byte) s->read();
 					if(data) {
-	  					for(i = 0; i < 8; i++) {
+						for(i = 0; i < 8; i++) {
 							if( (data >> i) & B00000001 ) {
 								quickModeCallback(i + 8*(2-reads) + 1);
 							}
-	  					}
+						}
 					}
-  					reads++;
+					reads++;
 				}
 				else {
 					retries++;
