@@ -1,5 +1,5 @@
 #include <SoftwareSerial.h>
-#include <MP3TriggerSoftwareSerial.h>
+#include <MP3Trigger.h>
 
 SoftwareSerial trigSerial = SoftwareSerial(2, 3);
 MP3TriggerSS trigger;
