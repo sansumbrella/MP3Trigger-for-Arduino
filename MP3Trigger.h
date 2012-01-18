@@ -3,7 +3,8 @@ MP3Trigger.h
 @author David Wicks, additions by Carl Jensen
 @url	sansumbrella.com
 
-Doesn't handle messages from the trigger at this point
+Supports Quiet Mode
+Doesn't handle status report from the trigger at this point
 */
 
 #ifndef MP3_TRIGGER_H

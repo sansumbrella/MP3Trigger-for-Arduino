@@ -2,6 +2,9 @@
 MP3Trigger.cpp
 @author David Wicks, additions by Carl Jensen
 @url	sansumbrella.com
+
+Supports Quiet Mode
+Doesn't handle status report from the trigger at this point
 */
 
 #include "MP3Trigger.h"
