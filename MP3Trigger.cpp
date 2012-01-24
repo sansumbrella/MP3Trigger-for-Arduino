@@ -24,6 +24,7 @@ MP3Trigger::~MP3Trigger()
 
 void MP3Trigger::setup()
 {
+	//Only for HardwareSerial, remove this line for SofwareSerial use
 	setup(&Serial);
 }
 

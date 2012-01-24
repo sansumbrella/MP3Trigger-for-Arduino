@@ -11,6 +11,7 @@ Doesn't handle status report from the trigger at this point
 #define MP3_TRIGGER_H
 
 #include <Arduino.h>
+//#include <SoftwareSerial.h>
 
 class MP3Trigger{
 public:
@@ -21,8 +22,8 @@ public:
 	void setup();
 	void play();
 	void stop();
-	void trigger(byte track);	//1–255
-	void play(byte track);		//0—255
+	void trigger(byte track);	//1-255
+	void play(byte track);		//0-255
 	void forward();				//move ahead one track
 	void reverse();				//move back one track
 	void setVolume(byte level);	//0-255

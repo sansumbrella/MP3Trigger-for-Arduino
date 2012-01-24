@@ -2,7 +2,7 @@
 #include <MP3Trigger.h>
 
 SoftwareSerial trigSerial = SoftwareSerial(2, 3);
-MP3TriggerSS trigger;
+MP3Trigger trigger;
 
 void setup() {
   // Start serial communication with the trigger (over SoftwareSerial)
