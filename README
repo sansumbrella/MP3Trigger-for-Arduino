@@ -1,7 +1,7 @@
 MP3Trigger by David Wicks
 http://sansumbrella.com/
 
-Additions and MP3TriggerSoftwareSerial variant by Carl Jensen
+QuietMode support and SoftwareSerial support through modification by Carl Jensen
 http://dimsos.fridata.dk 
 
 Simple wrapper for MP3Trigger serial communication from Arduino.
