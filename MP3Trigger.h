@@ -9,10 +9,10 @@ Doesn't handle messages from the trigger at this point
 #ifndef MP3_TRIGGER_H
 #define MP3_TRIGGER_H
 
-#include "WProgram.h"
+#include <Arduino.h>
 
 class MP3Trigger{
-  public:
+public:
 	MP3Trigger();
 	~MP3Trigger();
 	void setup(HardwareSerial* serial);
