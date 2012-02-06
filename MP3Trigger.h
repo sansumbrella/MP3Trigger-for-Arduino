@@ -3,20 +3,26 @@ MP3Trigger.h
 @author David Wicks
 @url	sansumbrella.com
 
-Doesn't handle messages from the trigger at this point
-*/
+Doesn't handle messages from the trigger.
 
+Accepts an iostream over which it sends/receives commands
+This is generally the HardwareSerial (Serial) in Arduino,
+though you could substitute in any other stream.
+
+You should make sure that a serial device is operating
+at the trigger's rate, which you can get like so:
+Serial.begin( MP3Trigger::serialRate() )
+*/
 #ifndef MP3_TRIGGER_H
 #define MP3_TRIGGER_H
 
 #include <Arduino.h>
-#include "Flags.h"
 
 class MP3Trigger{
 public:
 	MP3Trigger();
 	~MP3Trigger();
-	void setup(SERIAL_DEVICE *serial);
+	void setup(Stream *serial);
 	void setup();
 	void play();
 	void stop();
@@ -31,12 +37,13 @@ public:
 	void setLoopingTrack(byte track);	//select the track to loop
 	void update();						//make sure to call this during your loop()
 	
+	static long serialRate(){ return 38400; }
 private:
 	bool mDoLoop;
 	byte mLoopTrack;
 	bool mPlaying;
 	void loop();
-	SERIAL_DEVICE *s;
+	Stream *s;
 };
 
 #endif
