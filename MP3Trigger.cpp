@@ -53,7 +53,9 @@ void MP3Trigger::update()
 				handleTrackEnd();
 				break;
 			case 'x':
-				handleTrackEnd();			
+				if(!mPlaying) {
+					handleTrackEnd();
+				}
 				break;
 			case 'E':
 				mPlaying = false;
@@ -67,7 +69,7 @@ void MP3Trigger::update()
 void MP3Trigger::handleTrackEnd()
 {
 	if(mDoLoop)
-	{	
+	{
 		loop();
 	} else
 	{
@@ -82,11 +84,9 @@ void MP3Trigger::loop()
 
 void MP3Trigger::stop()
 {
-	bool wasPlaying = mPlaying;
 	mDoLoop = false;
-	mPlaying = false;
 	
-	if(wasPlaying)
+	if(mPlaying)
 	{
 		play();
 	}

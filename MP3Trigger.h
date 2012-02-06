@@ -40,11 +40,11 @@ public:
 	static long serialRate(){ return 38400; }
 private:
 	void handleTrackEnd();
+	void loop();
 	
 	bool mDoLoop;
 	byte mLoopTrack;
 	bool mPlaying;
-	void loop();
 	Stream *s;
 };
 
