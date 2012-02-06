@@ -39,6 +39,8 @@ public:
 	
 	static long serialRate(){ return 38400; }
 private:
+	void handleTrackEnd();
+	
 	bool mDoLoop;
 	byte mLoopTrack;
 	bool mPlaying;

@@ -47,19 +47,31 @@ void MP3Trigger::update()
 	if( s->available() )
 	{
 		int data = s->read();
-		if(char(data) == 'X' || char(data) == 'x')
+		switch(char(data))
 		{
-			if(mDoLoop)
-			{	
-				loop();
-			} else
-			{
+			case 'X':
+				handleTrackEnd();
+				break;
+			case 'x':
+				handleTrackEnd();			
+				break;
+			case 'E':
 				mPlaying = false;
-			}
-		} else if(char(data) == 'E')
-		{
-			mPlaying = false;
+				break;
+			default:
+				break;
 		}
+	}
+}
+
+void MP3Trigger::handleTrackEnd()
+{
+	if(mDoLoop)
+	{	
+		loop();
+	} else
+	{
+		mPlaying = false;
 	}
 }
 
