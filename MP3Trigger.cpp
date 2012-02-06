@@ -1,10 +1,7 @@
 /*
 MP3Trigger.cpp
-@author David Wicks, additions by Carl Jensen
+@author David Wicks
 @url	sansumbrella.com
-
-Supports Quiet Mode
-Doesn't handle status report from the trigger at this point
 */
 
 #include "MP3Trigger.h"
@@ -19,20 +16,11 @@ MP3Trigger::~MP3Trigger()
 {
 	s->flush();
 	s = NULL;
-	quickModeCallback = NULL;
 }
 
-void MP3Trigger::setup()
-{
-	//Only for HardwareSerial, remove this line for SofwareSerial use
-	setup(&Serial);
-}
-
-void MP3Trigger::setup(HardwareSerial* serial)
-//void MP3Trigger::setup(SoftwareSerial* serial)
+void MP3Trigger::setup(Stream *serial)
 {
 	s = serial;
-	s->begin(38400);
 }
 
 // 
@@ -59,40 +47,59 @@ void MP3Trigger::update()
 	if( s->available() )
 	{
 		int data = s->read();
-		
-		if(char(data) == 'X')
+		switch(char(data))
 		{
-			if(mDoLoop)
-			{	
-				loop();
-			} else
-			{
+			case 'X':
+				handleTrackEnd();
+				break;
+			case 'x':
+				if(!mPlaying) {
+					handleTrackEnd();
+				}
+				break;
+			case 'E':
 				mPlaying = false;
-			}
-		} else if(char(data) == 'E')
-		{
-			mPlaying = false;
-		} else if(char(data) == 'M')
-		{
-			byte reads = 0;
-			byte retries = 0;
-			byte i;
-			while(reads < 3 && retries < 1000) {
-				if(s->available()) {
-					data = (byte) s->read();
-					if(data) {
-						for(i = 0; i < 8; i++) {
-							if( (data >> i) & B00000001 ) {
-								quickModeCallback(i + 8*(2-reads) + 1);
-							}
-						}
+				break;
+			case 'M':
+				handleTriggerInput();
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+void MP3Trigger::handleTrackEnd()
+{
+	if(mDoLoop)
+	{
+		loop();
+	} else
+	{
+		mPlaying = false;
+	}
+}
+
+void MP3Trigger::handleTriggerInput()
+{
+	byte data;
+	byte reads = 0;
+	byte retries = 0;
+	byte i;
+	while(reads < 3 && retries < 1000) {
+		if(s->available()) {
+			data = (byte) s->read();
+			if(data) {
+				for(i = 0; i < 8; i++) {
+					if( (data >> i) & B00000001 ) {
+						quickModeCallback(i + 8*(2-reads) + 1);
 					}
-					reads++;
-				}
-				else {
-					retries++;
 				}
 			}
+			reads++;
+		}
+		else {
+			retries++;
 		}
 	}
 }

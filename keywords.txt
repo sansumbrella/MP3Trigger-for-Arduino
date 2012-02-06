@@ -25,6 +25,7 @@ statusRequest	KEYWORD2
 setLooping	KEYWORD2
 setLoopingTrack	KEYWORD2
 update	KEYWORD2
+serialRate	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)
@@ -35,5 +36,3 @@ MP3Trigger	KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
-
-qmTrig	LITERAL1
