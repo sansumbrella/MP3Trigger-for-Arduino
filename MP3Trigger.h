@@ -10,14 +10,15 @@ Doesn't handle messages from the trigger at this point
 #define MP3_TRIGGER_H
 
 #include <Arduino.h>
+#include "Flags.h"
 
 class MP3Trigger{
 public:
 	MP3Trigger();
 	~MP3Trigger();
-	void setup(HardwareSerial* serial);
+	void setup(SERIAL_DEVICE *serial);
 	void setup();
-  	void play();
+	void play();
 	void stop();
 	void trigger(byte track);	//1–255
 	void play(byte track);		//0—255
@@ -35,7 +36,7 @@ private:
 	byte mLoopTrack;
 	bool mPlaying;
 	void loop();
-	HardwareSerial* s;
+	SERIAL_DEVICE *s;
 };
 
 #endif
