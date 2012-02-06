@@ -8,3 +8,6 @@ You need to place MP3Trigger in the right place on your machine
 for Arduino libraries. On a Mac, that means MP3Trigger.h and
 MP3Trigger.cpp live inside:
 ~/Documents/Arduino/libraries/MP3Trigger
+
+Thanks to:
+Carl Jensen, http://dimsos.fridata.dk
