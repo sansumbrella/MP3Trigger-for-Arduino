@@ -60,6 +60,9 @@ void MP3Trigger::update()
 			case 'E':
 				mPlaying = false;
 				break;
+			case 'M':
+				handleTriggerInput();
+				break;
 			default:
 				break;
 		}
@@ -74,6 +77,30 @@ void MP3Trigger::handleTrackEnd()
 	} else
 	{
 		mPlaying = false;
+	}
+}
+
+void MP3Trigger::handleTriggerInput()
+{
+	byte data;
+	byte reads = 0;
+	byte retries = 0;
+	byte i;
+	while(reads < 3 && retries < 1000) {
+		if(s->available()) {
+			data = (byte) s->read();
+			if(data) {
+				for(i = 0; i < 8; i++) {
+					if( (data >> i) & B00000001 ) {
+						quickModeCallback(i + 8*(2-reads) + 1);
+					}
+				}
+			}
+			reads++;
+		}
+		else {
+			retries++;
+		}
 	}
 }
 
@@ -135,6 +162,14 @@ void MP3Trigger::setVolume(byte level)
 	// level = level ^ B11111111;	//flip it around, so the higher number > higher volume
 	s->write('v');
 	s->write(level);
+}
+
+// 1 for on, 0 for off, callback function
+void MP3Trigger::quietMode(boolean onoff, void (*callback)(int))
+{
+	s->write('Q');
+	s->write( '0' + onoff );
+	quickModeCallback = callback;
 }
 
 // 
