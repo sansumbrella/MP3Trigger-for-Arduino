@@ -31,6 +31,7 @@ public:
 	void forward();				//move ahead one track
 	void reverse();				//move back one track
 	void setVolume(byte level);	//0-255
+	void quietMode(boolean onoff, void (*function)(int));	//1 for on, 0 for off, callback function
 	void statusRequest();
 	
 	void setLooping(bool doLoop, byte track);		//turn looping on/off
@@ -40,12 +41,14 @@ public:
 	static long serialRate(){ return 38400; }
 private:
 	void handleTrackEnd();
+	void handleTriggerInput();
+	void loop();
 	
 	bool mDoLoop;
 	byte mLoopTrack;
 	bool mPlaying;
-	void loop();
 	Stream *s;
+	void (*quickModeCallback)(int);
 };
 
 #endif

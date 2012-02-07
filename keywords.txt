@@ -1,0 +1,38 @@
+#######################################
+# Syntax Coloring Map for MP3Trigger
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+MP3Trigger	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+setup	KEYWORD2
+play	KEYWORD2
+stop	KEYWORD2
+trigger	KEYWORD2
+play	KEYWORD2
+forward	KEYWORD2
+reverse	KEYWORD2
+setVolume	KEYWORD2
+quietMode	KEYWORD2
+statusRequest	KEYWORD2
+setLooping	KEYWORD2
+setLoopingTrack	KEYWORD2
+update	KEYWORD2
+serialRate	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+MP3Trigger	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
